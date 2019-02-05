@@ -1,0 +1,105 @@
+---
+title: "I400 Assignment"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#5.2 E2
+
+```{r}
+iris
+
+```
+
+#5.2.1 Opening the help file of a built-in dataset
+
+```{r}
+help(iris)
+```
+
+#5.2.2 Examining the object type
+
+```{r}
+class(iris)
+```
+
+#5.2.3 Retrieving a column from a dataframe
+
+```{r}
+iris$Species
+iris$Petal.Length
+```
+
+#5.2.4 Finding data type of a column (attribute)
+
+```{r}
+class(iris$Species)
+class(iris$Sepal.Length)
+```
+
+#5.2.5 Subscripting
+
+```{r}
+iris[1:50, ]
+iris[ ,1:2]
+iris[ , 1:1]
+iris[ , c("Sepal.Length", "Petal.Length")]
+iris[iris$Species == "setosa", ]
+```
+
+#5.2.6 Displaying column-wise statistics data
+
+```{r}
+summary(iris)
+# Min is the minimum value for length/width for the sepal/petal
+# 1st Qu. is the first quartile and means 25% observations are below this quantity
+# Median is the middle value for the length/width for the sepal/petal
+# Mean is the average for the length/width for the sepal/petal
+# 3rd. Qu is the third quartile and means 75% observations are below this quantity
+# Max is the maximum value in length/width for the sepal/petal
+```
+
+#5.3 E3
+
+```{r}
+df <- data.frame(X = -2:2, Y = 1:5)
+result1 <- df$Y[ df$X > 0 ]
+result2 <- df[ df$X > 0, ]
+result1
+result2
+```
+
+#5.4 E4
+
+```{r}
+mtcars <- data.frame(mtcars)
+help(mtcars)
+mtcars[1:5, ]
+tail(mtcars, 5)
+nrow(na.omit(mtcars)) # 11 rows
+ncol(na.omit(mtcars)) # 32 columns
+data(mtcars)
+View(mtcars)
+mtcars[ , c("mpg")]
+mtcars[mtcars$cyl == "6", c("mpg")]
+mtcars[mtcars$cyl == "6", ]
+mtcars[mtcars$mpg > "25", c("mpg","cyl")]
+```
+
+#5.5 E5
+
+```{r}
+library(tidyverse)
+diamonds <- data.frame(diamonds)
+help(diamonds)
+diamonds[1:5, ]
+nrow(na.omit(diamonds)) # 53,940 rows
+ncol(na.omit(diamonds)) # 10 columns
+nrow(diamonds[diamonds$cut == "Very Good", ]) # 12,082 rows
+nrow(diamonds[diamonds$carat > "3.0", ]) #32
+diamonds[diamonds$color == "D", c("color","cut")]
+summary(diamonds) # Average Price is 3933
+```
