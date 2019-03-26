@@ -1,0 +1,49 @@
+---
+title: "Homework"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r}
+library(tidyverse)
+train <-read_csv("https://www.iun.edu/~cisjw/ds/files/data/train.csv")
+library(polycor)
+train.cor <- hetcor(train$Survived, train$Pclass, train$Sex, train$Age, train$Fare, train$Port, train$SibSp)
+
+train.cor$correlations
+#The strongest correlation is Pclass and Fare, which is 0.8186306
+
+names <- c("Survived", "Pclass", "Sex", "Age", "Fare", "Port", "SibSp")
+train.corrmat <- as_tibble(train.cor$correlations)
+colnames(train.corrmat) <- names
+
+train.corrmat
+
+train.corrmat <- train.corrmat %>%
+  mutate(attribute=names) %>%
+  select(attribute, Survived, Pclass, Sex, Age, Fare, Port, SibSp)
+
+rank <- train.corrmat %>%
+  select(attribute, Survived) %>%
+  mutate(squared.correlation = Survived^2) %>%
+  arrange(desc(squared.correlation))
+
+rank
+rank$attribute
+
+
+library(corrplot)
+
+train.cor <- hetcor(train$Survived, train$Pclass, train$Sex, train$Age, train$Fare, train$Port, train$SibSp)
+
+
+corrplot(train.cor$correlations, method="shade", type="upper", tl.col="black", tl.srt=45)
+
+
+```
+
